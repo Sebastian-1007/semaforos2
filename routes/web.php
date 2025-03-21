@@ -41,13 +41,12 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', [AdminController::class, 'login'])->name('admin.login.submit');
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard')->middleware('auth:admin');
     Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
-// CRUD de usuarios
-Route::resource('users', UsersController::class)->names('admin.users');
-// Importar usuarios desde Excel
-Route::get('/importar-usuarios', [UsersImportController::class, 'show'])->name('admin.importar-usuarios.show');
-Route::post('/importar-usuarios', [UsersImportController::class, 'import'])->name('admin.importar-usuarios');
+    // CRUD de usuarios
+    Route::resource('users', UsersController::class)->names('admin.users');
+    // Importar usuarios desde Excel
+    Route::get('/importar-usuarios', [UsersImportController::class, 'show'])->name('admin.importar-usuarios.show');
+    Route::post('/importar-usuarios', [UsersImportController::class, 'import'])->name('admin.importar-usuarios');
 });
-
 
 //Rutas de usuarios
 use App\Http\Controllers\User\UserController;
@@ -88,7 +87,6 @@ Route::name('deleteSema')->get('/deleteSema/{Id_semaforo1}', [ControllerSemaforo
 Route::get('/semaforo1/editar_semaforo1/{Id_semaforo1}', [ControllerSemaforo1::class, 'edit'])->name('semaforo1.editar_semaforo1');
 Route::put('/semaforo1/{Id_semaforo1}', [ControllerSemaforo1::class, 'update'])->name('semaforo1_update');
 
-
 ///RUTAS SEMAFORO VEHICULOS 2
 Route::get('/semaforo2/registro_semaforo2', [ControllerSemaforo2::class, 'getSema2'])->name('semaforo2.registro_semaforo2');
 Route::name('semaforo2.detalle_semaforo2')->get('/semaforo2.detalle_semaforo2/{Id_semaforo2}', [ControllerSemaforo2::class,'getSema3'] );
@@ -97,6 +95,3 @@ Route::post('/semaforo2_store', [ControllerSemaforo2::class, 'store'])->name('se
 Route::name('deleteSema2')->get('/deleteSema2/{Id_semaforo2}', [ControllerSemaforo2::class,'deleteSema2'] );
 Route::get('/semaforo2/editar_semaforo2/{Id_semaforo2}', [ControllerSemaforo2::class, 'edit'])->name('semaforo2.editar_semaforo2');
 Route::put('/semaforo2/{Id_semaforo2}', [ControllerSemaforo2::class, 'update'])->name('semaforo2_update');
-
-
-
