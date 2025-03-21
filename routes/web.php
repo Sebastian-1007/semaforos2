@@ -23,6 +23,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/pagina2', function () {
+    return view('user.pagina2');
+})->middleware('auth')->name('user.pagina2');
+
+
 //Prueba de Hola mundo
 use App\Http\Controllers\Prueba\HolaMundoController;
 
