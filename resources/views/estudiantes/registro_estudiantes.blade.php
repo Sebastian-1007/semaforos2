@@ -538,12 +538,11 @@
             <ul class="sidebar-nav">
                 <li><a href="{{ route('admin.dashboard') }}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
                 <li><a href="{{ route('admin.users.index') }}" class="active"><i class="fas fa-users"></i><span>Usuarios</span></a></li>
-                <li><a href="{{ route('sensor.registro_sensor') }}" class="active"><i class="fas fa-users"></i><span>Registro Sensor Precensia</span></a></li>
+                <li><a href="{{ route('sensor.registro_sensor') }}" class="active"><i class="fas fa-users"></i><span>Registro Sensor Presencia</span></a></li>
                 <li><a href="{{ route('semaforo1.registro_semaforo1') }}" class="active"><i class="fas fa-users"></i><span>Registro Semaforo Vehiculos1</span></a></li>
                 <li><a href="{{ route('semaforo2.registro_semaforo2') }}" class="active"><i class="fas fa-users"></i><span>Registro Semaforo Vehiculos2</span></a></li>
                 <li><a href="{{ route('estudiantes.registro_estudiantes') }}" class="active"><i class="fas fa-users"></i><span>Registro Semaforo Estudiantes</span></a></li>
-                <li><a href="#"><i class="fas fa-chart-bar"></i><span>Estadísticas</span></a></li>
-                <li><a href="#"><i class="fas fa-cog"></i><span>Configuración</span></a></li>
+
             </ul>
         </nav>
     </aside>
@@ -564,9 +563,9 @@
                 <a href="{{ route('estudiantes.estudiantes_login') }}" class="btn-custom btn-success">
                     <i class="fas fa-plus"></i> Nuevo Registro Semaforo
                 </a>
-                <button class="btn-custom btn-primary tooltip" data-tooltip="Ver estadísticas de semáforos">
-                    <i class="fas fa-chart-pie"></i> Estadísticas
-                </button>
+                <a href="{{ route('admin.dashboard') }}" class="btn-custom btn-primary tooltip" data-tooltip="Ver estadísticas de usuarios">
+                  <i class="fas fa-chart-pie"></i> Estadísticas
+                </a>
             </div>
 
             <h2 style="margin-bottom: 1.5rem;"><i class="fas fa-list-ul"></i> Lista de Semaforo de Estudiantes</h2>
@@ -604,7 +603,6 @@
                     <table class="users-table">
                         <thead>
                             <tr>
-                                <th>Id</th>
                                 <th>Número de Cambios</th>
                                 <th>Fecha</th>
                                 <th>Hora</th>
@@ -614,7 +612,6 @@
                         <tbody id="semaforosTableBody">
                             @forelse ($Estu as $item)
                                 <tr class="semaforo-row">
-                                    <td data-label="ID">{{ $item['Id_semaforo_estu'] }}</td>
                                     <td data-label="Número de Cambios">{{ $item['Numero_Cambios'] }}</td>
                                     <td data-label="Fecha">{{ \Carbon\Carbon::parse($item['Fecha'])->format('d/m/Y') }}</td>
                                     <td data-label="Hora">{{ $item['Hora'] }}</td>
@@ -781,7 +778,7 @@
 
         // Obtener los encabezados de la tabla (excluyendo la columna "Acciones")
         document.querySelectorAll('.users-table thead th').forEach((header, index) => {
-            if (index < 4) { // Solo toma las primeras 7 columnas
+            if (index < 3) { // Solo toma las primeras 7 columnas
                 headers.push(header.innerText);
             }
         });
@@ -790,7 +787,7 @@
         table.querySelectorAll('tr').forEach(row => {
             const rowData = [];
             row.querySelectorAll('td').forEach((cell, index) => {
-                if (index < 4) { // Solo toma las primeras 7 columnas
+                if (index < 3) { // Solo toma las primeras 7 columnas
                     rowData.push(cell.innerText);
                 }
             });

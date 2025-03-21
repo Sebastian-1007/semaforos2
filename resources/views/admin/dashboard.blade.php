@@ -6,6 +6,12 @@
     <title>Gestión de Semáforos - Panel Administrativo</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="{{ asset('js/grafica.js') }}"></script>
+    <script src="{{ asset('js/grafica2.js') }}"></script>
+    <script src="{{ asset('js/grafica3.js') }}"></script>
+    <script src="{{ asset('js/grafica4.js') }}"></script>
+
     <style>
         :root {
             --verde-semaforo: #2ecc71;
@@ -138,6 +144,20 @@
             padding: 2rem;
             border-radius: 12px;
             margin: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .chart-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
         }
 
         .table-container {
@@ -165,28 +185,28 @@
             border-radius: 20px;
             font-size: 0.9rem;
         }
+
         .btn-custom {
-    background-color: #dc3545; /* Rojo Bootstrap */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    }
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
 
-    .btn-custom:hover {
-    background-color: #c82333; /* Rojo más oscuro al pasar el mouse */
-    transform: scale(1.05);
-   }
+        .btn-custom:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
 
-    .btn-custom:active {
-    background-color: #a71d2a; /* Rojo aún más oscuro al hacer clic */
-    transform: scale(0.95);
-  }
-
+        .btn-custom:active {
+            background-color: #a71d2a;
+            transform: scale(0.95);
+        }
     </style>
 </head>
 <body>
@@ -199,16 +219,13 @@
             <ul class="sidebar-nav">
                 <li><a href="{{ route('admin.dashboard') }}" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li><a href="{{ route('admin.users.index') }}"><i class="fas fa-users"></i> Registros</a></li>
-                <li><a href="#"><i class="fas fa-clock"></i> Tiempos</a></li>
-                <li><a href="#"><i class="fas fa-exclamation-triangle"></i> Alertas</a></li>
-                <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
             </ul>
         </nav>
     </aside>
 
     <main class="main-content">
         <div class="header-bar">
-            <h1>Gestión de Semáforos</h1>
+            <h1>Gestión y Graficas de Semáforos</h1>
             <form method="POST" action="{{ route('admin.logout') }}">
                 @csrf
                 <button type="submit" class="btn-custom btn-danger">
@@ -248,148 +265,28 @@
             </div>
         </div>
 
-        <div class="dashboard-grid">
+        <div class="chart-grid">
             <div class="chart-container">
-                <canvas id="trafficFlowChart"></canvas>
+                <h2>Gráfica Semaforo de Estudiantes</h2>
+                <canvas id="movimientosChart" width="400" height="200"></canvas>
             </div>
+
             <div class="chart-container">
-                <canvas id="userActivityChart"></canvas>
+                <h2>Gráfica Semaforo de Vehículos 2</h2>
+                <canvas id="vehiculosChart" width="400" height="200"></canvas>
             </div>
-        </div>
 
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Usuario</th>
-                        <th>Rol</th>
-                        <th>Estado</th>
-                        <th>Última Actividad</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>USR-001</td>
-                        <td>Juan Pérez</td>
-                        <td>Administrador</td>
-                        <td><span class="status-badge verde active">Activo</span></td>
-                        <td>09:15 AM</td>
-                    </tr>
-                    <tr>
-                        <td>USR-002</td>
-                        <td>María Gómez</td>
-                        <td>Técnico</td>
-                        <td><span class="status-badge amarillo active">Inactivo</span></td>
-                        <td>Ayer 14:30</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            <div class="chart-container">
+                <h2>Gráfica Semaforo de Vehículos 1</h2>
+                <canvas id="vehiculosChart1" width="400" height="200"></canvas>
+            </div>
 
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Ubicación</th>
-                        <th>Estado</th>
-                        <th>Última Actualización</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>SF-001</td>
-                        <td>Av. Principal esq. Calle 5</td>
-                        <td><span class="status-badge verde active">Operativo</span></td>
-                        <td>08:45 AM</td>
-                        <td><i class="fas fa-cog"></i></td>
-                    </tr>
-                    <tr>
-                        <td>SF-002</td>
-                        <td>Plaza Central</td>
-                        <td><span class="status-badge amarillo active">Mantenimiento</span></td>
-                        <td>07:30 AM</td>
-                        <td><i class="fas fa-cog"></i></td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="chart-container">
+                <h2>Gráfica Sensor de Presencia</h2>
+                <canvas id="sensorChart" width="400" height="200"></canvas>
+            </div>
         </div>
     </main>
 
-    <script>
-        // Supongamos que tienes los datos de la tabla en un array de objetos
-const datosTabla = [
-    { Id_semaforo_estu: 1, Numero_Cambios: 1500, Fecha: '2023-10-01', Hora: '06:00' },
-    { Id_semaforo_estu: 2, Numero_Cambios: 3200, Fecha: '2023-10-01', Hora: '09:00' },
-    { Id_semaforo_estu: 3, Numero_Cambios: 2800, Fecha: '2023-10-01', Hora: '12:00' },
-    { Id_semaforo_estu: 4, Numero_Cambios: 3400, Fecha: '2023-10-01', Hora: '15:00' },
-    { Id_semaforo_estu: 5, Numero_Cambios: 4200, Fecha: '2023-10-01', Hora: '18:00' },
-    { Id_semaforo_estu: 6, Numero_Cambios: 2300, Fecha: '2023-10-01', Hora: '21:00' }
-];
-
-// Extraer las horas y el número de cambios
-const labels = datosTabla.map(item => item.Hora);
-const data = datosTabla.map(item => item.Numero_Cambios);
-
-// Obtener el contexto del gráfico
-const trafficCtx = document.getElementById('trafficFlowChart').getContext('2d');
-
-// Crear el gráfico con los datos de la tabla
-new Chart(trafficCtx, {
-    type: 'line',
-    data: {
-        labels: labels, // Usar las horas como etiquetas
-        datasets: [{
-            label: 'Vehículos por hora',
-            data: data, // Usar el número de cambios como datos
-            borderColor: '#2c3e50',
-            backgroundColor: 'rgba(44, 62, 80, 0.1)',
-            tension: 0.4,
-            fill: true
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Flujo Vehicular Diario'
-            }
-        }
-    }
-});
-
-        // Gráfico de actividad de usuarios
-        const userCtx = document.getElementById('userActivityChart').getContext('2d');
-        new Chart(userCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
-                datasets: [{
-                    label: 'Sesiones de Usuarios',
-                    data: [25, 32, 28, 35, 40, 15, 10],
-                    backgroundColor: 'rgba(46, 204, 113, 0.8)',
-                    borderColor: '#2ecc71',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Actividad de Usuarios por Día'
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
 </body>
 </html>

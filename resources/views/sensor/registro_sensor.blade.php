@@ -538,12 +538,11 @@
             <ul class="sidebar-nav">
                 <li><a href="{{ route('admin.dashboard') }}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
                 <li><a href="{{ route('admin.users.index') }}" class="active"><i class="fas fa-users"></i><span>Usuarios</span></a></li>
-                <li><a href="{{ route('sensor.registro_sensor') }}" class="active"><i class="fas fa-users"></i><span>Registro Sensor Precensia</span></a></li>
+                <li><a href="{{ route('sensor.registro_sensor') }}" class="active"><i class="fas fa-users"></i><span>Registro Sensor Presencia</span></a></li>
                 <li><a href="{{ route('semaforo1.registro_semaforo1') }}" class="active"><i class="fas fa-users"></i><span>Registro Semaforo Vehiculos1</span></a></li>
                 <li><a href="{{ route('semaforo2.registro_semaforo2') }}" class="active"><i class="fas fa-users"></i><span>Registro Semaforo Vehiculos2</span></a></li>
                 <li><a href="{{ route('estudiantes.registro_estudiantes') }}" class="active"><i class="fas fa-users"></i><span>Registro Semaforo Estudiantes</span></a></li>
-                <li><a href="#"><i class="fas fa-chart-bar"></i><span>Estadísticas</span></a></li>
-                <li><a href="#"><i class="fas fa-cog"></i><span>Configuración</span></a></li>
+
             </ul>
         </nav>
     </aside>
@@ -562,14 +561,14 @@
         <section class="content fade-in">
             <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
                 <a href="{{ route('sensor.sensor_login') }}" class="btn-custom btn-success">
-                    <i class="fas fa-plus"></i> Nuevo Registro Sensores
+                    <i class="fas fa-plus"></i> Nuevo Registro Sensor
                 </a>
-                <button class="btn-custom btn-primary tooltip" data-tooltip="Ver estadísticas de sensores">
-                    <i class="fas fa-chart-pie"></i> Estadísticas
-                </button>
+                <a href="{{ route('admin.dashboard') }}" class="btn-custom btn-primary tooltip" data-tooltip="Ver estadísticas de usuarios">
+                 <i class="fas fa-chart-pie"></i> Estadísticas
+                </a>
             </div>
 
-            <h2 style="margin-bottom: 1.5rem;"><i class="fas fa-list-ul"></i> Lista de Sensores</h2>
+            <h2 style="margin-bottom: 1.5rem;"><i class="fas fa-list-ul"></i> Lista de Sensor de Presencia</h2>
 
             @if(session('success'))
                 <div class="alert alert-success">
@@ -590,11 +589,17 @@
                     </div>
                 </div>
 
-                <div class="btn-download-container">
+                <div class="table-controls"> 
+                 <div class="btn-download-container">
                     <button id="downloadPdfBtn" class="btn-download">
                     <i class="fas fa-download"></i> Descargar PDF </button>
                   </div>
 
+                  <div class="btn-download-container">
+                    <button id="downloadExcelBtn" class="btn-download">
+                    <i class="fas fa-download"></i> Descargar Excel </button>
+                  </div>
+                </div>
                 <div class="table-container">
                     <table class="users-table">
                         <thead>
@@ -761,6 +766,45 @@
 
         // Descargar el PDF
         pdf.save('Semaforo Sensor de Presencia.pdf');
+    });
+</script>
+<!-- Incluye la biblioteca xlsx -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+<script>
+    document.getElementById('downloadExcelBtn').addEventListener('click', function () {
+        // Obtener los datos de la tabla
+        const table = document.getElementById('sensorsTableBody');
+        const headers = [];
+        const rows = [];
+
+        // Obtener los encabezados de la tabla (excluyendo la columna "Acciones")
+        document.querySelectorAll('.users-table thead th').forEach((header, index) => {
+            if (index < 3) { // Solo toma las primeras 7 columnas
+                headers.push(header.innerText);
+            }
+        });
+
+        // Obtener las filas de la tabla (excluyendo la columna "Acciones")
+        table.querySelectorAll('tr').forEach(row => {
+            const rowData = [];
+            row.querySelectorAll('td').forEach((cell, index) => {
+                if (index < 3) { // Solo toma las primeras 7 columnas
+                    rowData.push(cell.innerText);
+                }
+            });
+            rows.push(rowData);
+        });
+
+        // Crear un libro de Excel y una hoja de trabajo
+        const workbook = XLSX.utils.book_new();
+        const worksheetData = [headers, ...rows];
+        const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+
+        // Añadir la hoja de trabajo al libro
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Registro Sensor');
+
+        // Generar el archivo Excel y descargarlo
+        XLSX.writeFile(workbook, 'Registro de Sensor.xlsx');
     });
 </script>
 </body>

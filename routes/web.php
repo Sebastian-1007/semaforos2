@@ -23,6 +23,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/pagina2', function () {
+    return view('user.pagina2');
+})->middleware('auth')->name('user.pagina2');
+
 //Prueba de Hola mundo
 use App\Http\Controllers\Prueba\HolaMundoController;
 
@@ -90,7 +94,7 @@ Route::get('/semaforo2/registro_semaforo2', [ControllerSemaforo2::class, 'getSem
 Route::name('semaforo2.detalle_semaforo2')->get('/semaforo2.detalle_semaforo2/{Id_semaforo2}', [ControllerSemaforo2::class,'getSema3'] );
 Route::get('/seamforo2/semaforo2_login', [ControllerSemaforo2::class, 'create'])->name('semaforo2.semaforo2_login');
 Route::post('/semaforo2_store', [ControllerSemaforo2::class, 'store'])->name('semaforo2_store'); 
-Route::name('deleteSema2')->get('/deleteSema/{Id_semaforo2}', [ControllerSemaforo2::class,'deleteSema2'] );
+Route::name('deleteSema2')->get('/deleteSema2/{Id_semaforo2}', [ControllerSemaforo2::class,'deleteSema2'] );
 Route::get('/semaforo2/editar_semaforo2/{Id_semaforo2}', [ControllerSemaforo2::class, 'edit'])->name('semaforo2.editar_semaforo2');
 Route::put('/semaforo2/{Id_semaforo2}', [ControllerSemaforo2::class, 'update'])->name('semaforo2_update');
 

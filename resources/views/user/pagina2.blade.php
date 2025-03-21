@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Usuario - NovaTech</title>
+    <title>Dashboard de Usuario - Sistema de Semáforos NovaTech</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -102,7 +102,7 @@
 
         /* Tarjeta de bienvenida */
         .welcome-card {
-            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            background: transparent;
             color: white;
             border-radius: 1rem;
             padding: 2rem;
@@ -110,7 +110,6 @@
             text-align: center;
             animation: fadeIn 1s ease;
         }
-
         .welcome-card h1 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
@@ -288,23 +287,42 @@
             color: #000;
         }
 
-    .semaforo-list {
-        list-style-type: none; /* Elimina los puntos de las viñetas */
-        padding-left: 0; /* Elimina el padding por defecto de la lista */
-    }
+        .semaforo-list {
+            list-style-type: none; /* Elimina los puntos de las viñetas */
+            padding-left: 0; /* Elimina el padding por defecto de la lista */
+        }
 
-    .semaforo-list li {
-        position: relative; /* Permite posicionar el semáforo */
-        padding-left: 1.5em; /* Espacio para el semáforo */
-        margin-bottom: 0.5rem; /* Espaciado entre elementos */
-    }
+        .semaforo-list li {
+            position: relative; /* Permite posicionar el semáforo */
+            padding-left: 1.5em; /* Espacio para el semáforo */
+            margin-bottom: 0.5rem; /* Espaciado entre elementos */
+        }
 
-    .semaforo-list li::before {
-        content: "🚦"; /* Agrega el semáforo como viñeta */
-        position: absolute;
-        left: 0; /* Alinea el semáforo a la izquierda */
-    }
+        .semaforo-list li::before {
+            content: "🚦"; /* Agrega el semáforo como viñeta */
+            position: absolute;
+            left: 0; /* Alinea el semáforo a la izquierda */
+        }
 
+        /* Video Responsivo */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* Proporción 16:9 */
+            height: 0;
+            overflow: hidden;
+            margin-top: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 0 20px var(--neon-blue);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
     </style>
 </head>
 <body>
@@ -321,12 +339,12 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">
+                    <a class="nav-link active" href="{{ route('user.dashboard') }}">
                         <i class="fas fa-home me-2"></i>Inicio
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('user.pagina2') }}">
+                    <a class="nav-link active" href="#">
                         <i></i>Acerca del Sistema
                     </a>
                 </li>
@@ -348,84 +366,56 @@
 </nav>
 
 <div class="dashboard-container">
+    <!-- Tarjeta de Bienvenida -->
     <div class="welcome-card">
-        <h1>Bienvenido al Dashboard de NovaTech</h1>
-        <p>Gestión y monitoreo de tráfico vehicular en tiempo real.</p>
+        <h1>Conoce el estado de los semaforos y sistema, averigua mas sobre la historia de los semaforos</h1>
     </div>
 
-    <div class="dashboard-grid">
-        <div class="card">
-            <h3>Semáforos Activos</h3>
-            <div class="stats-number">48</div>
-            <div class="semaforo-status">
-                <div class="semaforo-light verde active"></div>
-                <div class="semaforo-light amarillo"></div>
-                <div class="semaforo-light rojo"></div>
+    <!-- Estadísticas -->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <h3>Semáforos Activos</h3>
+                <p class="stats-number">120</p>
+                <p class="text-success">+5% este mes</p>
             </div>
-            <small>98% operatividad</small>
         </div>
-
-        <div class="card">
-            <h3>Flujo Vehicular</h3>
-            <div class="stats-number">12,450</div>
-            <div class="text-success">↓ 5% pico máximo</div>
+        <div class="col-md-4">
+            <div class="card">
+                <h3>Incidentes Reportados</h3>
+                <p class="stats-number">1</p>
+                <p class="text-warning">0% este mes</p>
+            </div>
         </div>
-    </div>
-
-    <div class="dashboard-grid">
-      <div class="card">
-        <h3>Importancia de los Semáforos</h3>
-        <p>Los semáforos son esenciales para la gestión del tráfico, ya que ayudan a:</p>
-        <ul class="semaforo-list">
-            <li>Reducir los accidentes de tráfico.</li>
-            <li>Optimizar el flujo vehicular.</li>
-            <li>Minimizar los tiempos de espera en intersecciones.</li>
-            <li>Mejorar la seguridad de peatones y ciclistas.</li>
-        </ul>
-      </div>
-
-        <div class="card">
-            <h3>Estadísticas de Tráfico</h3>
-            <p>El tráfico vehicular a fuera de la Universidad Tecnologica del Valle de Toluca a mostrado una tendencia a la baja en las horas pico, lo que indica una mejora en la gestión del tráfico y una reducción en los tiempos donde existe mas trafico normalmente.</p>
-            <div class="text-warning">↓ 10% en horas pico</div>
+        <div class="col-md-4">
+            <div class="card">
+                <h3>Eficiencia del Sistema</h3>
+                <p class="stats-number">95%</p>
+                <p class="text-success">+3% este mes</p>
+            </div>
         </div>
     </div>
 
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Usuario</th>
-                    <th>Rol</th>
-                    <th>Estado</th>
-                    <th>Última Actividad</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>USR-001</td>
-                    <td>Sebastian Rojas Nuñez</td>
-                    <td>Administrador</td>
-                    <td><span class="status-badge verde active">Activo</span></td>
-                    <td>Hace 2 horas</td>
-                </tr>
-                <tr>
-                    <td>USR-002</td>
-                    <td>Rubi Plata Alvarez</td>
-                    <td>Administradora</td>
-                    <td><span class="status-badge amarillo active">Activa</span></td>
-                    <td>Hace 1 hora</td>
-                </tr>
-                <tr>
-                    <td>USR-003</td>
-                    <td>Luis Enrique Gonzales Ramirez</td>
-                    <td>Administrador</td>
-                    <td><span class="status-badge amarillo active">Activo</span></td>
-                    <td>Hace 30 minutos</td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- Información del Sistema -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <h3>Estado de los Semáforos</h3>
+                <ul class="semaforo-list">
+                    <li>Semáforo 1: <span class="status-badge verde">Funcionando</span></li>
+                    <li>Semáforo 2: <span class="status-badge amarillo">En Mantenimiento</span></li>
+                    <li>Semáforo 3: <span class="status-badge rojo">Fuera de Servicio</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <h3>Historia de Semaforos</h3>
+                <div class="video-container">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/TlcD_QcJqOo?si=juAsLkNt6l0Mmae2" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
