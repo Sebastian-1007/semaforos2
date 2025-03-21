@@ -175,6 +175,136 @@
             from { transform: translateY(20px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
+
+        /* Estilos adicionales para las tarjetas de estadísticas */
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 20px var(--neon-blue);
+            border-color: var(--neon-blue);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--neon-blue);
+        }
+
+        .semaforo-status {
+            display: flex;
+            justify-content: space-around;
+            margin: 1rem 0;
+        }
+
+        .semaforo-light {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #ccc;
+        }
+
+        .semaforo-light.verde.active {
+            background-color: var(--neon-green);
+        }
+
+        .semaforo-light.amarillo.active {
+            background-color: var(--neon-yellow);
+        }
+
+        .semaforo-light.rojo.active {
+            background-color: var(--neon-red);
+        }
+
+        .text-success {
+            color: var(--neon-green);
+        }
+
+        .text-warning {
+            color: var(--neon-yellow);
+        }
+
+        .text-danger {
+            color: var(--neon-red);
+        }
+
+        .table-container {
+            margin-top: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+        }
+
+        th {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-badge.verde {
+            background-color: var(--neon-green);
+            color: #000;
+        }
+
+        .status-badge.amarillo {
+            background-color: var(--neon-yellow);
+            color: #000;
+        }
+
+        .status-badge.rojo {
+            background-color: var(--neon-red);
+            color: #000;
+        }
+
+    .semaforo-list {
+        list-style-type: none; /* Elimina los puntos de las viñetas */
+        padding-left: 0; /* Elimina el padding por defecto de la lista */
+    }
+
+    .semaforo-list li {
+        position: relative; /* Permite posicionar el semáforo */
+        padding-left: 1.5em; /* Espacio para el semáforo */
+        margin-bottom: 0.5rem; /* Espaciado entre elementos */
+    }
+
+    .semaforo-list li::before {
+        content: "🚦"; /* Agrega el semáforo como viñeta */
+        position: absolute;
+        left: 0; /* Alinea el semáforo a la izquierda */
+    }
+
     </style>
 </head>
 <body>
@@ -196,13 +326,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-chart-line me-2"></i>Estadísticas
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-cog me-2"></i>Configuración
+                    <a class="nav-link active" href="{{ route('user.pagina2') }}">
+                        <i></i>Acerca del Sistema
                     </a>
                 </li>
             </ul>
@@ -222,7 +347,87 @@
     </div>
 </nav>
 
+<div class="dashboard-container">
+    <div class="welcome-card">
+        <h1>Bienvenido al Dashboard de NovaTech</h1>
+        <p>Gestión y monitoreo de tráfico vehicular en tiempo real.</p>
+    </div>
 
+    <div class="dashboard-grid">
+        <div class="card">
+            <h3>Semáforos Activos</h3>
+            <div class="stats-number">48</div>
+            <div class="semaforo-status">
+                <div class="semaforo-light verde active"></div>
+                <div class="semaforo-light amarillo"></div>
+                <div class="semaforo-light rojo"></div>
+            </div>
+            <small>98% operatividad</small>
+        </div>
+
+        <div class="card">
+            <h3>Flujo Vehicular</h3>
+            <div class="stats-number">12,450</div>
+            <div class="text-success">↓ 5% pico máximo</div>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="card">
+        <h3>Importancia de los Semáforos</h3>
+        <p>Los semáforos son esenciales para la gestión del tráfico, ya que ayudan a:</p>
+        <ul class="semaforo-list">
+            <li>Reducir los accidentes de tráfico.</li>
+            <li>Optimizar el flujo vehicular.</li>
+            <li>Minimizar los tiempos de espera en intersecciones.</li>
+            <li>Mejorar la seguridad de peatones y ciclistas.</li>
+        </ul>
+      </div>
+
+        <div class="card">
+            <h3>Estadísticas de Tráfico</h3>
+            <p>El tráfico vehicular a fuera de la Universidad Tecnologica del Valle de Toluca a mostrado una tendencia a la baja en las horas pico, lo que indica una mejora en la gestión del tráfico y una reducción en los tiempos donde existe mas trafico normalmente.</p>
+            <div class="text-warning">↓ 10% en horas pico</div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Rol</th>
+                    <th>Estado</th>
+                    <th>Última Actividad</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>USR-001</td>
+                    <td>Sebastian Rojas Nuñez</td>
+                    <td>Administrador</td>
+                    <td><span class="status-badge verde active">Activo</span></td>
+                    <td>Hace 2 horas</td>
+                </tr>
+                <tr>
+                    <td>USR-002</td>
+                    <td>Rubi Plata Alvarez</td>
+                    <td>Administradora</td>
+                    <td><span class="status-badge amarillo active">Activa</span></td>
+                    <td>Hace 1 hora</td>
+                </tr>
+                <tr>
+                    <td>USR-003</td>
+                    <td>Luis Enrique Gonzales Ramirez</td>
+                    <td>Administrador</td>
+                    <td><span class="status-badge amarillo active">Activo</span></td>
+                    <td>Hace 30 minutos</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
