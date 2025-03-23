@@ -11,7 +11,7 @@ class ControllerSensor extends Controller
     public function getSensor(Request $request)
     {
         // Hacemos una solicitud GET a la API externa
-        $response = Http::get('http://localhost:3000/sistema/sensor_presencia/');
+        $response = Http::get('http://3.85.62.21:3000/sistema/sensor_presencia/');
     
         if ($response->successful()) {
             $data = $response->json(); // Convierte la respuesta JSON en un array
@@ -61,7 +61,7 @@ class ControllerSensor extends Controller
 
     public function getSensor1($Id_sensor){
         // Hacemos una solicitud GET a una API externa
-        $response = Http::get('http://localhost:3000/sistema/sensor_presencia/'. $Id_sensor);
+        $response = Http::get('http://3.85.62.21:3000/sistema/sensor_presencia/'. $Id_sensor);
 
         // Verificamos si la solicitud fue exitosa
         if ($response->successful()) {
@@ -79,7 +79,7 @@ class ControllerSensor extends Controller
     public function create()
     {
         // Obtener los grupos desde la API
-        $Sensor = Http::get('http://localhost:3000/sistema/sensor_presencia/')->json();
+        $Sensor = Http::get('http://3.85.62.21:3000/sistema/sensor_presencia/')->json();
 
         return view('sensor.sensor_login', compact('Sensor'));
     }
@@ -91,7 +91,7 @@ class ControllerSensor extends Controller
             'Hora' => 'required'
         ]);
 
-        $response = Http::post('http://localhost:3000/sistema/sensor_presencia/', [
+        $response = Http::post('http://3.85.62.21:3000/sistema/sensor_presencia/', [
             'Numero_Estudiantes' => $request->Numero_Estudiantes,
             'Fecha' => $request->Fecha,
             'Hora' => $request->Hora,   
@@ -108,7 +108,7 @@ class ControllerSensor extends Controller
     public function edit($Id_sensor)
     {
     // Obtener los datos del sensor desde la API
-    $response = Http::get("http://localhost:3000/sistema/sensor_presencia/{$Id_sensor}");
+    $response = Http::get("http://3.85.62.21:3000/sistema/sensor_presencia/{$Id_sensor}");
 
     if ($response->successful()) {
         $Sensor = $response->json();
@@ -134,7 +134,7 @@ class ControllerSensor extends Controller
     ];
 
     // Enviar datos a la API
-    $response = Http::put("http://localhost:3000/sistema/sensor_presencia/{$Id_sensor}", $Sensor);
+    $response = Http::put("http://3.85.62.21:3000/sistema/sensor_presencia/{$Id_sensor}", $Sensor);
 
     if ($response->successful()) {
         return redirect()->route('sensor.registro_sensor')->with('success', 'Datos actualizados correctamente');
@@ -148,7 +148,7 @@ class ControllerSensor extends Controller
     public function deleteSensor($Id_sensor)
     {
         // Agrega una barra antes del ID para formar una URL válida
-        $response = Http::delete('http://localhost:3000/sistema/sensor_presencia/' . $Id_sensor);
+        $response = Http::delete('http://3.85.62.21:3000/sistema/sensor_presencia/' . $Id_sensor);
     
         if ($response->successful()) {
             return redirect()->route('sensor.registro_sensor')->with('success', 'Recurso eliminado correctamente');

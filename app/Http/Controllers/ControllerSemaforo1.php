@@ -10,7 +10,7 @@ class ControllerSemaforo1 extends Controller
     public function getSema(Request $request)
 {
     // Hacemos una solicitud GET a una API externa
-    $response = Http::get('http://localhost:3000/sistema/semaforo_vehiculos1/');
+    $response = Http::get('http://3.85.62.21:3000/sistema/semaforo_vehiculos1/');
 
     if ($response->successful()) {
         $data = $response->json(); // Convierte la respuesta JSON en un array
@@ -60,7 +60,7 @@ class ControllerSemaforo1 extends Controller
 
     public function getSema1($Id_semaforo1){
         // Hacemos una solicitud GET a una API externa
-        $response = Http::get('http://localhost:3000/sistema/semaforo_vehiculos1/'. $Id_semaforo1);
+        $response = Http::get('http://3.85.62.21:3000/sistema/semaforo_vehiculos1/'. $Id_semaforo1);
 
         // Verificamos si la solicitud fue exitosa
         if ($response->successful()) {
@@ -77,7 +77,7 @@ class ControllerSemaforo1 extends Controller
     public function create()
     {
         // Obtener los grupos desde la API
-        $Sema = Http::get('http://localhost:3000/sistema/semaforo_vehiculos1/')->json();
+        $Sema = Http::get('http://3.85.62.21:3000/sistema/semaforo_vehiculos1/')->json();
 
         return view('semaforo1.semaforo1_login', compact('Sema'));
     }
@@ -89,7 +89,7 @@ class ControllerSemaforo1 extends Controller
             'Hora' => 'required'
         ]);
 
-        $response = Http::post('http://localhost:3000/sistema/semaforo_vehiculos1/', [
+        $response = Http::post('http://3.85.62.21:3000/sistema/semaforo_vehiculos1/', [
             'Numero_Cambios' => $request->Numero_Cambios,
             'Fecha' => $request->Fecha,
             'Hora' => $request->Hora,   
@@ -106,7 +106,7 @@ class ControllerSemaforo1 extends Controller
     public function edit($Id_semaforo1)
     {
     // Obtener los datos del sensor desde la API
-    $response = Http::get("http://localhost:3000/sistema/semaforo_vehiculos1/{$Id_semaforo1}");
+    $response = Http::get("http://3.85.62.21:3000/sistema/semaforo_vehiculos1/{$Id_semaforo1}");
 
     if ($response->successful()) {
         $Sema = $response->json();
@@ -132,7 +132,7 @@ class ControllerSemaforo1 extends Controller
     ];
 
     // Enviar datos a la API
-    $response = Http::put("http://localhost:3000/sistema/semaforo_vehiculos1/{$Id_semaforo1}", $Sema);
+    $response = Http::put("http://3.85.62.21:3000/sistema/semaforo_vehiculos1/{$Id_semaforo1}", $Sema);
 
     if ($response->successful()) {
         return redirect()->route('semaforo1.registro_semaforo1')->with('success', 'Datos actualizados correctamente');
@@ -146,7 +146,7 @@ class ControllerSemaforo1 extends Controller
     public function deleteSema($Id_semaforo1)
     {
         // Agrega una barra antes del ID para formar una URL válida
-        $response = Http::delete('http://localhost:3000/sistema/semaforo_vehiculos1/' . $Id_semaforo1);
+        $response = Http::delete('http://3.85.62.21:3000/sistema/semaforo_vehiculos1/' . $Id_semaforo1);
     
         if ($response->successful()) {
             return redirect()->route('semaforo1.registro_semaforo1')->with('success', 'Recurso eliminado correctamente');

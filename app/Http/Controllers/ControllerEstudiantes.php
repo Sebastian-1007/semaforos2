@@ -11,7 +11,7 @@ class ControllerEstudiantes extends Controller
     public function getEstu(Request $request)
     {
         // Hacemos una solicitud GET a la API externa
-        $response = Http::get('http://localhost:3000/sistema/semaforo_estudiantes/');
+        $response = Http::get('http://3.85.62.21:3000/sistema/semaforo_estudiantes/');
     
         if ($response->successful()) {
             $data = $response->json(); // Convierte la respuesta JSON en un array
@@ -61,7 +61,7 @@ class ControllerEstudiantes extends Controller
 
     public function getEstu1($Id_semaforo_estu){
         // Hacemos una solicitud GET a una API externa
-        $response = Http::get('http://localhost:3000/sistema/semaforo_estudiantes/'. $Id_semaforo_estu);
+        $response = Http::get('http://3.85.62.21:3000/sistema/semaforo_estudiantes/'. $Id_semaforo_estu);
 
         // Verificamos si la solicitud fue exitosa
         if ($response->successful()) {
@@ -78,7 +78,7 @@ class ControllerEstudiantes extends Controller
     public function create()
     {
         // Obtener los grupos desde la API
-        $Estu = Http::get('http://localhost:3000/sistema/semaforo_estudiantes/')->json();
+        $Estu = Http::get('http://3.85.62.21:3000/sistema/semaforo_estudiantes/')->json();
 
         return view('estudiantes.estudiantes_login', compact('Estu'));
     }
@@ -90,7 +90,7 @@ class ControllerEstudiantes extends Controller
             'Hora' => 'required'
         ]);
 
-        $response = Http::post('http://localhost:3000/sistema/semaforo_estudiantes/', [
+        $response = Http::post('http://3.85.62.21:3000/sistema/semaforo_estudiantes/', [
             'Numero_Cambios' => $request->Numero_Cambios,
             'Fecha' => $request->Fecha,
             'Hora' => $request->Hora,   
@@ -107,7 +107,7 @@ class ControllerEstudiantes extends Controller
     public function edit($Id_semaforo_estu)
     {
     // Obtener los datos del sensor desde la API
-    $response = Http::get("http://localhost:3000/sistema/semaforo_estudiantes/{$Id_semaforo_estu}");
+    $response = Http::get("http://3.85.62.21:3000/sistema/semaforo_estudiantes/{$Id_semaforo_estu}");
 
     if ($response->successful()) {
         $Estu = $response->json();
@@ -133,7 +133,7 @@ class ControllerEstudiantes extends Controller
     ];
 
     // Enviar datos a la API
-    $response = Http::put("http://localhost:3000/sistema/semaforo_estudiantes/{$Id_semaforo_estu}", $Estu);
+    $response = Http::put("http://3.85.62.21:3000/sistema/semaforo_estudiantes/{$Id_semaforo_estu}", $Estu);
 
     if ($response->successful()) {
         return redirect()->route('estudiantes.registro_estudiantes')->with('success', 'Datos actualizados correctamente');
@@ -147,7 +147,7 @@ class ControllerEstudiantes extends Controller
     public function deleteEstu($Id_semaforo_estu)
     {
         // Agrega una barra antes del ID para formar una URL válida
-        $response = Http::delete('http://localhost:3000/sistema/semaforo_estudiantes/' . $Id_semaforo_estu);
+        $response = Http::delete('http://3.85.62.21:3000/sistema/semaforo_estudiantes/' . $Id_semaforo_estu);
     
         if ($response->successful()) {
             return redirect()->route('estudiantes.registro_estudiantes')->with('success', 'Recurso eliminado correctamente');
