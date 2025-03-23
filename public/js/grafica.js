@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let movimientosChart;
 
     function fetchDataAndUpdateChart() {
-        fetch('http://localhost:3000/sistema/semaforo_estudiantes/') // Usa la URL de tu API
+        fetch('http://3.85.62.21:3000/sistema/semaforo_estudiantes/') // Usa la URL de tu API
             .then(response => response.json())
             .then(data => {
                 // Procesar los datos para agrupar por fecha

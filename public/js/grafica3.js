@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let vehiculosChart1; // Cambiar el nombre de la variable de la gráfica
 
     function fetchDataAndUpdateChart() {
-        fetch('http://localhost:3000/sistema/semaforo_vehiculos1/') // Nueva URL de la API
+        fetch('http://3.85.62.21:3000/sistema/semaforo_vehiculos1/') // Nueva URL de la API
             .then(response => response.json())
             .then(data => {
                 // Procesar los datos para agrupar por fecha
